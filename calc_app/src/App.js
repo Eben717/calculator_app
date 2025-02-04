@@ -1,4 +1,5 @@
 import { useReducer } from "react"
+import DigitButton from "./DigitButton"
 import "./style.css"
 
 export const ACTIONS = {
@@ -14,7 +15,7 @@ function reducer(state, { type, payload }) {
     case ACTIONS.ADD_DIGIT:
       return {
         ...state,
-        currentOperand: `${ currentOperand || "" }${payload.digit}`
+        currentOperand: `${ state.currentOperand || "" }${payload.digit}`
       }
   }
 }
@@ -22,7 +23,6 @@ function reducer(state, { type, payload }) {
 function App () {
   const [{ currentOperand, previousOperand, operation }, dispatch] = useReducer(reducer)
 
-  dispatch({ type: ACTIONS.ADD_DIGIT, payload: { digit: 1 }})
   return (
     <div className="calculator-grid">
       <div className="output">
@@ -31,7 +31,7 @@ function App () {
     </div>
     <button className="span-two">AC</button>
     <button>DEL</button>
-    <button>÷</button>
+    <DigitButton digit="÷" dispatch={dispatch} />
     <button>1</button>
     <button>2</button>
     <button>3</button>
